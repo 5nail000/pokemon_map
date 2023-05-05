@@ -19,3 +19,7 @@ class Entities(models.Model):
     level = models.IntegerField()
     lat = models.DecimalField(max_digits=8, decimal_places=6)
     lon = models.DecimalField(max_digits=8, decimal_places=6)
+    appearted_date = models.DateField(auto_now_add=True)
+    appearted_time = models.TimeField(auto_now_add=True)
+    disappearted_date = models.DateField(auto_now_add=True)
+    disappearted_time = models.TimeField(auto_now_add=True)
