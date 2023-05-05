@@ -7,7 +7,7 @@ class Pokemon(models.Model):
     title_en = models.CharField(max_length=200)
     title_jp = models.CharField(max_length=200)
     description = models.TextField()
-    img_url = models.CharField(max_length=2048)
+    image = models.ImageField(default=None, upload_to='pokemons', blank=True)
     next_evolution = models.IntegerField(default=None)
     previous_evolution = models.IntegerField(default=None)
 
