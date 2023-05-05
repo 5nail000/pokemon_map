@@ -11,6 +11,9 @@ class Pokemon(models.Model):
     next_evolution = models.IntegerField(default=None)
     previous_evolution = models.IntegerField(default=None)
 
+    def __str__(self):
+        return self.title_ru
+
 
 class Entities(models.Model):
     pokemon_id = models.IntegerField()
