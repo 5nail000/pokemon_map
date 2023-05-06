@@ -2,7 +2,7 @@ import folium
 
 from datetime import datetime
 from django.http import HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from pokemon_entities.models import Pokemon, Entities
 from django.db.models import Q
 from django.conf import settings
@@ -65,14 +65,7 @@ def show_all_pokemons(request):
 
 def show_pokemon(request, pokemon_id):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    pokemons_all = Pokemon.objects.all()
-
-    for pokemon in pokemons_all:
-        if pokemon.id == int(pokemon_id):
-            requested_pokemon = pokemon
-            break
-    else:
-        return HttpResponseNotFound('<h1>Такой покемон не найден</h1>')
+    requested_pokemon = get_object_or_404(Pokemon, id=int(pokemon_id))
 
     pokemon_entities = Pokemon.objects.filter(id=int(pokemon_id))[0].pokemon_entities.all()
     for pokemon_entity in pokemon_entities:
