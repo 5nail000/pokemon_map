@@ -36,3 +36,6 @@ class Entities(models.Model):
     strength = models.IntegerField(default=100, verbose_name="Сила", blank=False)
     defence = models.IntegerField(default=100, verbose_name="Защита", blank=False)
     stamina = models.IntegerField(default=100, verbose_name="Выносливость", blank=False)
+
+    def __str__(self):
+        return f'{self.id} - {self.pokemon.title_ru} ({self.appearted_date} - {self.disappearted_date})'
