@@ -5,6 +5,7 @@ from django.http import HttpResponseNotFound
 from django.shortcuts import render
 from pokemon_entities.models import Pokemon, Entities
 from django.db.models import Q
+from django.conf import settings
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -45,7 +46,7 @@ def show_all_pokemons(request):
             folium_map,
             entity.lat,
             entity.lon,
-            str(request.build_absolute_uri(f'/media/{entity.pokemon.image}'))
+            str(request.build_absolute_uri(entity.pokemon.image.url))
         )
 
     pokemons_on_page = []
@@ -79,14 +80,14 @@ def show_pokemon(request, pokemon_id):
             folium_map,
             pokemon_entity.lat,
             pokemon_entity.lon,
-            str(request.build_absolute_uri(f'/media/{pokemon_entity.pokemon.image}'))
+            str(request.build_absolute_uri(pokemon_entity.pokemon.image.url))
         )
     pokemon = {
         'title_ru': requested_pokemon.title_ru,
         'title_en': requested_pokemon.title_en,
         'title_jp': requested_pokemon.title_jp,
         'description': requested_pokemon.description,
-        'img_url': str(request.build_absolute_uri(f'/media/{requested_pokemon.image}'))
+        'img_url': str(request.build_absolute_uri(requested_pokemon.image.url))
     }
 
     if requested_pokemon.next_evolution:
