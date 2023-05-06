@@ -32,12 +32,10 @@ def show_all_pokemons(request):
     now = datetime.now()
     pokemons_all = Pokemon.objects.all()
     entities_all = Entities.objects.filter(
-        Q(Q(disappearted_date__gt=now.date()) |
-          Q(disappearted_date=now.date(), disappearted_time__gte=now.time()) |
-          Q(disappearted_date=None),
-          Q(appearted_date__lt=now.date()) |
-          Q(appearted_date=now.date(), disappearted_time__lte=now.time()) |
-          Q(appearted_date=None)
+        Q(Q(disappearted_datetime__gte=now) |
+          Q(disappearted_datetime=None),
+          Q(appearted_datetime__lt=now) |
+          Q(appearted_datetime=None)
           )
     )
 
@@ -77,7 +75,6 @@ def show_pokemon(request, pokemon_id):
 
     pokemon_entities = Pokemon.objects.filter(id=int(pokemon_id))[0].pokemon_entities.all()
     for pokemon_entity in pokemon_entities:
-        print(pokemon_entity)
         add_pokemon(
             folium_map,
             pokemon_entity.lat,
