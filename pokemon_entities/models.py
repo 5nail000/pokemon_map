@@ -1,5 +1,4 @@
 from django.db import models  # noqa F401
-import django.utils.timezone
 
 
 class Pokemon(models.Model):
@@ -7,7 +6,7 @@ class Pokemon(models.Model):
     title_en = models.CharField(max_length=200, verbose_name="Имя(на английском)", blank=True)
     title_jp = models.CharField(max_length=200, verbose_name="Имя(на японском)", blank=True)
     description = models.TextField(verbose_name="Описание", blank=True)
-    image = models.ImageField(default=None, upload_to='pokemons', blank=True, verbose_name="Изображение")
+    image = models.ImageField(upload_to='pokemons', verbose_name="Изображение")
     next_evolution = models.ForeignKey('self',
                                        to_field='id',
                                        on_delete=models.SET_NULL,
