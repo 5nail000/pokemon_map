@@ -24,7 +24,7 @@ class Pokemon(models.Model):
 
 
 class Entities(models.Model):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name="Имя Покемона")
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, verbose_name="Имя Покемона", related_name="pokemon_entities")
     lat = models.DecimalField(max_digits=8, decimal_places=6, verbose_name="Координата-широта")
     lon = models.DecimalField(max_digits=8, decimal_places=6, verbose_name="Координата-долгота")
     appearted_date = models.DateField(default=django.utils.timezone.now, verbose_name="Дата явления", blank=True)
