@@ -85,8 +85,9 @@ def show_pokemon(request, pokemon_id):
 
     if requested_pokemon.next_evolution:
         pokemon.update({'next_evolution': requested_pokemon.next_evolution})
-    if requested_pokemon.previous_evolution:
-        pokemon.update({'previous_evolution': requested_pokemon.previous_evolution})
+    evolution_prev = Pokemon.objects.filter(id=int(pokemon_id))[0].evolution_in.first()
+    if evolution_prev:
+        pokemon.update({'previous_evolution': evolution_prev})
 
     return render(request, 'pokemon.html', context={
         'map': folium_map._repr_html_(), 'pokemon': pokemon

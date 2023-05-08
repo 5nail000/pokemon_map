@@ -12,15 +12,8 @@ class Pokemon(models.Model):
                                        on_delete=models.SET_NULL,
                                        null=True,
                                        blank=True,
-                                       related_name='next_evolution_set',
+                                       related_name='evolution_in',
                                        verbose_name='Эволюционирует в')
-    previous_evolution = models.ForeignKey('self',
-                                           to_field='id',
-                                           on_delete=models.SET_NULL,
-                                           null=True,
-                                           blank=True,
-                                           related_name='previous_evolution_set',
-                                           verbose_name='Эволюционировал из')
 
     def __str__(self):
         return self.title_ru
@@ -31,9 +24,7 @@ class Entities(models.Model):
     lat = models.DecimalField(max_digits=8, decimal_places=6, verbose_name="Координата-широта")
     lon = models.DecimalField(max_digits=8, decimal_places=6, verbose_name="Координата-долгота")
     appearted_datetime = models.DateTimeField(verbose_name="Момент явления", blank=True, null=True)
-    # appearted_time = models.TimeField(verbose_name="Время явления", blank=True, null=True)
     disappearted_datetime = models.DateTimeField(verbose_name="Момент исчезновения", blank=True, null=True)
-    # disappearted_time = models.TimeField(verbose_name="Время исчезновения", blank=True, null=True)
     level = models.IntegerField(verbose_name="Уровень")
     health = models.IntegerField(verbose_name="Здоровье")
     strength = models.IntegerField(verbose_name="Сила")
