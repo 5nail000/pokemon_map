@@ -1,11 +1,9 @@
 import folium
 
 from datetime import datetime
-from django.http import HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from pokemon_entities.models import Pokemon, Entities
 from django.db.models import Q
-from django.conf import settings
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -33,10 +31,10 @@ def show_all_pokemons(request):
     now = datetime.now()
     pokemons_all = Pokemon.objects.all()
     entities_all = Entities.objects.filter(
-        Q(Q(disappearted_datetime__gte=now) |
-          Q(disappearted_datetime=None),
-          Q(appearted_datetime__lt=now) |
-          Q(appearted_datetime=None)
+        Q(Q(disappearted_at__gte=now) |
+          Q(disappearted_at=None),
+          Q(appearted_at__lt=now) |
+          Q(appearted_at=None)
           )
     )
 
@@ -67,7 +65,7 @@ def show_pokemon(request, pokemon_id):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     requested_pokemon = get_object_or_404(Pokemon, id=int(pokemon_id))
 
-    pokemon_entities = Pokemon.objects.filter(id=int(pokemon_id))[0].pokemon_entities.all()
+    pokemon_entities = Pokemon.objects.filter(id=int(pokemon_id))[0].entities.all()
     for pokemon_entity in pokemon_entities:
         add_pokemon(
             folium_map,
