@@ -74,8 +74,8 @@ def show_pokemon(request, pokemon_id):
         'img_url': str(request.build_absolute_uri(requested_pokemon.image.url))
     }
 
-    if requested_pokemon.evolves:
-        pokemon_profile.update({'next_evolution': requested_pokemon.evolves})
+    if requested_pokemon.next_evolution:
+        pokemon_profile.update({'next_evolution': requested_pokemon.next_evolution})
     evolution_prev = requested_pokemon.have_evolved.first()
     if evolution_prev:
         pokemon_profile.update({'previous_evolution': evolution_prev})
