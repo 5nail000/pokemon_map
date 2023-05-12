@@ -12,7 +12,7 @@ class Pokemon(models.Model):
                                        on_delete=models.SET_NULL,
                                        null=True,
                                        blank=True,
-                                       related_name='evolute_from',
+                                       related_name='prev_evolution',
                                        verbose_name='Эволюционирует в')
 
     def __str__(self):
