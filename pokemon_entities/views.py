@@ -3,7 +3,6 @@ import folium
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404
 from pokemon_entities.models import Pokemon, Entities
-from django.db.models import Q
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -30,8 +29,7 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 def show_all_pokemons(request):
     now = datetime.now()
     pokemons = Pokemon.objects.all()
-    entities = Entities.objects.filter(
-        Q(disappeared_at__gte=now, appeared_at__lt=now))
+    entities = Entities.objects.filter(disappeared_at__gte=now, appeared_at__lt=now)
 
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     for entity in entities:
@@ -60,8 +58,7 @@ def show_pokemon(request, pokemon_id):
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
     requested_pokemon = get_object_or_404(Pokemon, id=int(pokemon_id))
 
-    pokemon = Pokemon.objects.filter(id=int(pokemon_id))[0]
-    pokemon_entities = pokemon.entities.all()
+    pokemon_entities = requested_pokemon.entities.all()
     for pokemon_entity in pokemon_entities:
         add_pokemon(
             folium_map,
@@ -77,9 +74,9 @@ def show_pokemon(request, pokemon_id):
         'img_url': str(request.build_absolute_uri(requested_pokemon.image.url))
     }
 
-    if requested_pokemon.next_evolution:
-        pokemon_profile.update({'next_evolution': requested_pokemon.next_evolution})
-    evolution_prev = pokemon.evolutions.first()
+    if requested_pokemon.evolution:
+        pokemon_profile.update({'next_evolution': requested_pokemon.evolution})
+    evolution_prev = requested_pokemon.evolutions.first()
     if evolution_prev:
         pokemon_profile.update({'previous_evolution': evolution_prev})
 
