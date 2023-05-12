@@ -76,7 +76,7 @@ def show_pokemon(request, pokemon_id):
 
     if requested_pokemon.next_evolution:
         pokemon_profile.update({'next_evolution': requested_pokemon.next_evolution})
-    evolution_prev = requested_pokemon.have_evolved.first()
+    evolution_prev = requested_pokemon.prev_evolution.first()
     if evolution_prev:
         pokemon_profile.update({'previous_evolution': evolution_prev})
 
