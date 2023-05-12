@@ -7,12 +7,12 @@ class Pokemon(models.Model):
     title_jp = models.CharField(max_length=200, verbose_name="Имя(на японском)", blank=True)
     description = models.TextField(verbose_name="Описание", blank=True)
     image = models.ImageField(upload_to='pokemons', verbose_name="Изображение")
-    evolution = models.ForeignKey('self',
+    evolves = models.ForeignKey('self',
                                        to_field='id',
                                        on_delete=models.SET_NULL,
                                        null=True,
                                        blank=True,
-                                       related_name='evolution',
+                                       related_name='have_evolved',
                                        verbose_name='Эволюционирует в')
 
     def __str__(self):
@@ -31,8 +31,8 @@ class Entities(models.Model):
     defence = models.IntegerField(verbose_name="Защита")
     stamina = models.IntegerField(verbose_name="Выносливость")
 
-    def __str__(self):
-        date_in = self.appeared_at.date() if self.appeared_at else "always before"
-        date_out = self.disappeared_at.date() if self.disappeared_at else "and forever"
-        title_text = '(always)' if not self.appeared_at and not self.disappeared_at else f'({date_in} - {date_out})'
-        return f'{self.id} - {self.pokemon.title_ru} {title_text}'
+def __str__(self):
+    date_in = self.appeared_at.date() if self.appeared_at else "always before"
+    date_out = self.disappeared_at.date() if self.disappeared_at else "and forever"
+    title_text = '(always)' if not self.appeared_at and not self.disappeared_at else f'({date_in} - {date_out})'
+    return f'{self.id} - {self.pokemon.title_ru} {title_text}'
